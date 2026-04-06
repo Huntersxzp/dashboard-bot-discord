@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hydra Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #020617;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* TEXTO CENTRAL */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+span {
+  color: #22c55e;
+}
+
+/* CANVAS FUNDO */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="center">
+  <h1>🤖 Bem-vindo ao Dashboard do <span>Hydra</span></h1>
+  <p>Carregando sistema...</p>
+</div>
+
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+/* CRIAR MOLÉCULAS */
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 1.5,
+    vy: (Math.random() - 0.5) * 1.5,
+    size: Math.random() * 3 + 1,
+    hue: Math.random() * 360
+  });
+}
+
+/* ANIMAÇÃO */
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.hue += 0.5;
+
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${p.hue}, 100%, 60%)`;
+    ctx.fill();
+  });
+
+  /* LINHAS ENTRE MOLÉCULAS */
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `hsla(${particles[i].hue}, 100%, 60%, 0.2)`;
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+/* RESPONSIVO */
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
