@@ -9,129 +9,122 @@
 body {
   margin: 0;
   background: #020617;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   color: white;
-  overflow-x: hidden;
 }
 
-/* FUNDO */
-canvas {
+/* MENU ICON */
+.menu-icon {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-/* INICIO */
-.center {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 2;
-}
-
-/* BOTÃO */
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 10px;
-  background: #22c55e;
-  color: white;
-  font-size: 16px;
+  top: 15px;
+  left: 15px;
+  font-size: 28px;
   cursor: pointer;
+  z-index: 999;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: #0f172a;
+  padding: 20px;
+  transition: 0.3s;
+  z-index: 998;
+}
+
+.sidebar a {
+  display: block;
+  margin: 15px 0;
+  color: white;
+  text-decoration: none;
 }
 
 /* PAINEL */
 #painel {
-  display: none;
-  padding: 30px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
+  padding: 20px;
 }
 
-/* TEXTO DIGITANDO */
+/* TITULO */
 #typing {
-  font-size: 26px;
-  margin-bottom: 10px;
-  border-right: 2px solid #22c55e;
-  display: inline-block;
-}
-
-/* DESCRIÇÃO */
-.descricao {
-  max-width: 800px;
-  margin: 20px auto;
-  font-size: 16px;
-  color: #cbd5e1;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 40px;
 }
 
 /* BOTÕES */
 .botoes {
+  text-align: center;
   margin-top: 20px;
 }
 
 .botoes a {
-  display: inline-block;
   margin: 10px;
-  padding: 12px 20px;
+  padding: 10px 15px;
+  background: #3b82f6;
   border-radius: 10px;
   text-decoration: none;
   color: white;
-  background: #3b82f6;
-  box-shadow: 0 0 10px #3b82f6;
 }
 
 /* CARDS */
-.cards {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  align-items: center;
-}
-
 .card {
-  max-width: 800px;
-  padding: 25px;
-  border-radius: 12px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
   background: rgba(255,255,255,0.05);
-  border-left: 4px solid #3b82f6;
-  box-shadow: 0 0 20px #3b82f6;
-  text-align: left;
+  box-shadow: 0 0 15px #3b82f6;
 }
 
-.card h3 {
-  margin-bottom: 10px;
+/* COMANDOS */
+#comandos {
+  display: none;
+}
+
+.categoria {
+  margin: 20px;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid #22c55e;
+}
+
+.comando {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.05);
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+button {
+  background: #22c55e;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
+<!-- MENU -->
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
 
-<!-- TELA INICIAL -->
-<div class="center" id="inicio">
-  <h1>🤖 Bem-vindo ao Dashboard do <span style="color:#22c55e;">Hydra</span></h1>
-  <button onclick="entrar()">🚀 Começar</button>
+<div class="sidebar" id="sidebar">
+  <h2>Hydra</h2>
+  <a href="#" onclick="abrirPainel()">🏠 Início</a>
+  <a href="#" onclick="abrirComandos()">📜 Comandos</a>
 </div>
 
-<!-- PAINEL -->
+<!-- PAINEL PRINCIPAL -->
 <div id="painel">
 
-  <div id="typing"></div>
-
-  <div class="descricao">
-    O Hydra é um bot completo criado para levar organização, automação e poder para o seu servidor.  
-    Com sistemas avançados de verificação, tickets e filas, você transforma seu servidor em algo profissional.  
-    <br><br>
-    💡 Crie comunidades fortes, organizadas e automatizadas.  
-    🚀 Leve seu servidor para outro nível com o Hydra.
-  </div>
+  <div id="typing">Informações do Hydra</div>
 
   <div class="botoes">
     <a href="https://discord.com/oauth2/authorize?client_id=1487580689615552552&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank">
@@ -139,42 +132,47 @@ button {
     </a>
 
     <a href="https://discord.gg/CTUE9asuT" target="_blank">
-      💬 Servidor Suporte
+      💬 Suporte
     </a>
   </div>
 
-  <div class="cards">
+  <div class="card">
+    🔐 Sistema de Verificação — Proteja seu servidor contra raids.
+  </div>
 
-    <div class="card">
-      <h3>🔐 Sistema de Verificação</h3>
-      Proteja seu servidor com um sistema inteligente de verificação.  
-      Apenas usuários verificados terão acesso completo, evitando raids e spam.  
-      <br><br>
-      💡 Segurança é o primeiro passo para um servidor de sucesso.
+  <div class="card">
+    🎫 Sistema de Tickets — Atendimento profissional.
+  </div>
+
+</div>
+
+<!-- PÁGINA COMANDOS -->
+<div id="comandos">
+
+  <h2 style="text-align:center;">📜 Comandos</h2>
+
+  <!-- CATEGORIA -->
+  <div class="categoria">
+    <h3>⚙️ Administração</h3>
+
+    <div class="comando">
+      <span>/say — Faz o bot falar</span>
+      <button onclick="copiar('/say')">Copiar</button>
     </div>
 
-    <div class="card">
-      <h3>🎫 Sistema de Tickets</h3>
-      Organize atendimentos com um sistema profissional de tickets.  
-      Ideal para suporte, vendas ou administração.  
-      <br><br>
-      🚀 Atendimento rápido gera confiança.
+    <div class="comando">
+      <span>/ban — Banir usuário</span>
+      <button onclick="copiar('/ban')">Copiar</button>
     </div>
 
-    <div class="card">
-      <h3>🎮 Filas Automáticas</h3>
-      Crie filas automáticas para partidas, eventos ou competições.  
-      Sistema perfeito para servidores de Free Fire ou games em geral.  
-      <br><br>
-      🎯 Organização traz competitividade.
-    </div>
+  </div>
 
-    <div class="card">
-      <h3>⚙️ Automação Completa</h3>
-      Hydra automatiza tarefas repetitivas e melhora a experiência dos usuários.  
-      Menos trabalho manual, mais controle.  
-      <br><br>
-      💡 Trabalhe inteligente, não mais difícil.
+  <div class="categoria">
+    <h3>🎮 Diversão</h3>
+
+    <div class="comando">
+      <span>/jogar — Jogar algo</span>
+      <button onclick="copiar('/jogar')">Copiar</button>
     </div>
 
   </div>
@@ -182,82 +180,25 @@ button {
 </div>
 
 <script>
-function entrar() {
-  document.getElementById("inicio").style.display = "none";
+function toggleMenu() {
+  let menu = document.getElementById("sidebar");
+  menu.style.left = menu.style.left === "0px" ? "-250px" : "0px";
+}
+
+function abrirComandos() {
+  document.getElementById("painel").style.display = "none";
+  document.getElementById("comandos").style.display = "block";
+}
+
+function abrirPainel() {
   document.getElementById("painel").style.display = "block";
-  typeText();
+  document.getElementById("comandos").style.display = "none";
 }
 
-/* DIGITAÇÃO */
-const text = "Informações do Hydra";
-let i = 0;
-
-function typeText() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeText, 70);
-  }
+function copiar(texto) {
+  navigator.clipboard.writeText(texto);
+  alert("Comando copiado: " + texto);
 }
-
-/* FUNDO ANIMADO */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for (let i = 0; i < 80; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 1.5,
-    vy: (Math.random() - 0.5) * 1.5,
-    size: Math.random() * 3 + 1,
-    hue: Math.random() * 360
-  });
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.hue += 0.5;
-
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `hsl(${p.hue}, 100%, 60%)`;
-    ctx.fill();
-  });
-
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-
-      let dx = particles[i].x - particles[j].x;
-      let dy = particles[i].y - particles[j].y;
-      let dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 120) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `hsla(${particles[i].hue}, 100%, 60%, 0.2)`;
-        ctx.stroke();
-      }
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-
-animate();
 </script>
 
 </body>
