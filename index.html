@@ -14,10 +14,10 @@ body {
   color: white;
 }
 
-/* TEXTO */
+/* TELA INICIAL */
 .center {
   position: absolute;
-  top: 40%; /* SUBI MAIS */
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -34,21 +34,44 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-button:hover {
-  background: #16a34a;
-}
-
-/* PAINEL ESCONDIDO */
+/* PAINEL */
 #painel {
   display: none;
   position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 20%;
+  width: 100%;
   text-align: center;
+  z-index: 2;
+}
+
+/* TEXTO DIGITANDO */
+#typing {
+  font-size: 24px;
+  margin-bottom: 30px;
+  border-right: 2px solid #22c55e;
+  display: inline-block;
+  padding-right: 5px;
+}
+
+/* CARDS */
+.cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* BLOCO */
+.card {
+  width: 80%;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid #3b82f6;
+  box-shadow: 0 0 15px #3b82f6;
 }
 
 /* CANVAS */
@@ -66,26 +89,40 @@ canvas {
 
 <div class="center" id="inicio">
   <h1>🤖 Bem-vindo ao <br>Dashboard do <span style="color:#22c55e;">Hydra</span></h1>
-  <p>Carregando sistema...</p>
-
   <button onclick="entrar()">🚀 Começar</button>
 </div>
 
 <div id="painel">
-  <h2>🔥 Painel Hydra</h2>
+  <div id="typing"></div>
 
-  <button>✅ Verificação</button><br><br>
-  <button>🎫 Tickets</button><br><br>
-  <button>🎮 Filas</button>
+  <div class="cards">
+    <div class="card">🤖 Nome: Hydra</div>
+    <div class="card">🟢 Status: Online</div>
+    <div class="card">👥 Usuários: 120</div>
+    <div class="card">⚙️ Sistema: Ativo</div>
+  </div>
 </div>
 
 <script>
 function entrar() {
   document.getElementById("inicio").style.display = "none";
   document.getElementById("painel").style.display = "block";
+  typeText();
 }
 
-/* ANIMAÇÃO */
+/* EFEITO DIGITANDO */
+const text = "Informações do Hydra";
+let i = 0;
+
+function typeText() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText, 80);
+  }
+}
+
+/* ANIMAÇÃO FUNDO */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
