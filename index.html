@@ -8,13 +8,21 @@
 <style>
 body {
   margin: 0;
-  overflow: hidden;
   background: #020617;
   font-family: Arial, sans-serif;
   color: white;
+  overflow-x: hidden;
 }
 
-/* TELA INICIAL */
+/* FUNDO */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* INICIO */
 .center {
   position: absolute;
   top: 40%;
@@ -39,46 +47,65 @@ button {
 /* PAINEL */
 #painel {
   display: none;
-  position: absolute;
-  top: 20%;
-  width: 100%;
+  padding: 30px;
   text-align: center;
+  position: relative;
   z-index: 2;
 }
 
 /* TEXTO DIGITANDO */
 #typing {
-  font-size: 24px;
-  margin-bottom: 30px;
+  font-size: 26px;
+  margin-bottom: 10px;
   border-right: 2px solid #22c55e;
   display: inline-block;
-  padding-right: 5px;
+}
+
+/* DESCRIÇÃO */
+.descricao {
+  max-width: 800px;
+  margin: 20px auto;
+  font-size: 16px;
+  color: #cbd5e1;
+}
+
+/* BOTÕES */
+.botoes {
+  margin-top: 20px;
+}
+
+.botoes a {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  background: #3b82f6;
+  box-shadow: 0 0 10px #3b82f6;
 }
 
 /* CARDS */
 .cards {
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
+  gap: 25px;
   align-items: center;
-  gap: 20px;
 }
 
-/* BLOCO */
 .card {
-  width: 80%;
-  max-width: 300px;
-  padding: 20px;
+  max-width: 800px;
+  padding: 25px;
   border-radius: 12px;
   background: rgba(255,255,255,0.05);
   border-left: 4px solid #3b82f6;
-  box-shadow: 0 0 15px #3b82f6;
+  box-shadow: 0 0 20px #3b82f6;
+  text-align: left;
 }
 
-/* CANVAS */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+.card h3 {
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -87,20 +114,71 @@ canvas {
 
 <canvas id="bg"></canvas>
 
+<!-- TELA INICIAL -->
 <div class="center" id="inicio">
-  <h1>🤖 Bem-vindo ao <br>Dashboard do <span style="color:#22c55e;">Hydra</span></h1>
+  <h1>🤖 Bem-vindo ao Dashboard do <span style="color:#22c55e;">Hydra</span></h1>
   <button onclick="entrar()">🚀 Começar</button>
 </div>
 
+<!-- PAINEL -->
 <div id="painel">
+
   <div id="typing"></div>
 
-  <div class="cards">
-    <div class="card">🤖 Nome: Hydra</div>
-    <div class="card">🟢 Status: Online</div>
-    <div class="card">👥 Usuários: 120</div>
-    <div class="card">⚙️ Sistema: Ativo</div>
+  <div class="descricao">
+    O Hydra é um bot completo criado para levar organização, automação e poder para o seu servidor.  
+    Com sistemas avançados de verificação, tickets e filas, você transforma seu servidor em algo profissional.  
+    <br><br>
+    💡 Crie comunidades fortes, organizadas e automatizadas.  
+    🚀 Leve seu servidor para outro nível com o Hydra.
   </div>
+
+  <div class="botoes">
+    <a href="https://discord.com/oauth2/authorize?client_id=1487580689615552552&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank">
+      🤖 Adicionar Bot
+    </a>
+
+    <a href="https://discord.gg/CTUE9asuT" target="_blank">
+      💬 Servidor Suporte
+    </a>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>🔐 Sistema de Verificação</h3>
+      Proteja seu servidor com um sistema inteligente de verificação.  
+      Apenas usuários verificados terão acesso completo, evitando raids e spam.  
+      <br><br>
+      💡 Segurança é o primeiro passo para um servidor de sucesso.
+    </div>
+
+    <div class="card">
+      <h3>🎫 Sistema de Tickets</h3>
+      Organize atendimentos com um sistema profissional de tickets.  
+      Ideal para suporte, vendas ou administração.  
+      <br><br>
+      🚀 Atendimento rápido gera confiança.
+    </div>
+
+    <div class="card">
+      <h3>🎮 Filas Automáticas</h3>
+      Crie filas automáticas para partidas, eventos ou competições.  
+      Sistema perfeito para servidores de Free Fire ou games em geral.  
+      <br><br>
+      🎯 Organização traz competitividade.
+    </div>
+
+    <div class="card">
+      <h3>⚙️ Automação Completa</h3>
+      Hydra automatiza tarefas repetitivas e melhora a experiência dos usuários.  
+      Menos trabalho manual, mais controle.  
+      <br><br>
+      💡 Trabalhe inteligente, não mais difícil.
+    </div>
+
+  </div>
+
 </div>
 
 <script>
@@ -110,7 +188,7 @@ function entrar() {
   typeText();
 }
 
-/* EFEITO DIGITANDO */
+/* DIGITAÇÃO */
 const text = "Informações do Hydra";
 let i = 0;
 
@@ -118,11 +196,11 @@ function typeText() {
   if (i < text.length) {
     document.getElementById("typing").innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeText, 80);
+    setTimeout(typeText, 70);
   }
 }
 
-/* ANIMAÇÃO FUNDO */
+/* FUNDO ANIMADO */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -180,11 +258,6 @@ function animate() {
 }
 
 animate();
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
 </script>
 
 </body>
