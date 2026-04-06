@@ -14,25 +14,44 @@ body {
   color: white;
 }
 
-/* TEXTO CENTRAL */
+/* TEXTO */
 .center {
   position: absolute;
-  top: 50%;
+  top: 40%; /* SUBI MAIS */
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 2;
 }
 
-h1 {
-  font-size: 28px;
+/* BOTÃO */
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  background: #22c55e;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-span {
-  color: #22c55e;
+button:hover {
+  background: #16a34a;
 }
 
-/* CANVAS FUNDO */
+/* PAINEL ESCONDIDO */
+#painel {
+  display: none;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* CANVAS */
 canvas {
   position: fixed;
   top: 0;
@@ -45,12 +64,28 @@ canvas {
 
 <canvas id="bg"></canvas>
 
-<div class="center">
-  <h1>🤖 Bem-vindo ao Dashboard do <span>Hydra</span></h1>
+<div class="center" id="inicio">
+  <h1>🤖 Bem-vindo ao <br>Dashboard do <span style="color:#22c55e;">Hydra</span></h1>
   <p>Carregando sistema...</p>
+
+  <button onclick="entrar()">🚀 Começar</button>
+</div>
+
+<div id="painel">
+  <h2>🔥 Painel Hydra</h2>
+
+  <button>✅ Verificação</button><br><br>
+  <button>🎫 Tickets</button><br><br>
+  <button>🎮 Filas</button>
 </div>
 
 <script>
+function entrar() {
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("painel").style.display = "block";
+}
+
+/* ANIMAÇÃO */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -59,7 +94,6 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 
-/* CRIAR MOLÉCULAS */
 for (let i = 0; i < 80; i++) {
   particles.push({
     x: Math.random() * canvas.width,
@@ -71,12 +105,10 @@ for (let i = 0; i < 80; i++) {
   });
 }
 
-/* ANIMAÇÃO */
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach(p => {
-
     p.x += p.vx;
     p.y += p.vy;
     p.hue += 0.5;
@@ -90,7 +122,6 @@ function animate() {
     ctx.fill();
   });
 
-  /* LINHAS ENTRE MOLÉCULAS */
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
 
@@ -113,7 +144,6 @@ function animate() {
 
 animate();
 
-/* RESPONSIVO */
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
